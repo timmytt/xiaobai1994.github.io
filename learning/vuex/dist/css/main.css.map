@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/index.css","webpack:///./src/index.less"],"names":[],"mappings":"AAAA;AACA;AACA,C;ACFA;AACA;AACA;AACA;AACA;AACA;AACA","file":"css/main.css","sourcesContent":["body{\n    background:red\n}",".testSpan {\n  font-size: 20px;\n}\nbody {\n  color: yellow;\n  font-size: 20px;\n}\n"],"sourceRoot":""}

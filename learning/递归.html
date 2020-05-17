@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div>
+            <div style="border:1px solid red;width:100px;height:100px">111</div>
+        </div>
+    </div>
+</body>
+<script>
+    // 一个问题只要同时满足以下3 个条件，就可以用递归来解决。
+    // 一个问题的解可以分解为几个子问题的解。
+    // 这个问题分解之后的子问题，除了数据规模不同，求解思路完全一样
+    // 存在递归终止条件
+
+    // 写出递归公式(注意几分支递归)
+    // 找到终止条件 
+
+
+
+    //1、题：假设有n个台阶，每次你可以跨一个台阶或者两个台阶，请问走这n个台阶有多少种走法？用编程求解。
+    // 递归公式：根据第一步的走法可分为两类，第一类是第一步走了一个台阶，第二类是第一步走了两个台阶。所以n个台阶的走法=（先走1台阶后，n-1个台阶的走法）+（先走2台阶后，n-2个台阶的走法）。写出的递归公式就是:
+    // f(n)=f(n-1)+f(n-2)
+    // f(2)=2 f(1)=1
+    // function walk(n) {
+    //     if (n === 1 || n === 2) {
+    //         return n
+    //     }
+    //     return walk(n - 1) + walk(n - 2)
+
+
+    // }
+
+    // let depth = 0 表示递归的深度 防止爆栈
+    // function f(n) {
+    //     depth++
+    //     if (depth > 1000) throw new Error("爆栈啦")
+    //     if (n === 1) {
+    //         return 1
+    //     }
+    //     return f(n - 1)
+    // }
+    // f(1001)
+
+    //存在重复计算的问题 
+    //set数据结构 初始化new Set()
+    //const set = new Set([1, 2, 3, 4, 4]);
+    //[...set] 原型方法 add clear has  size  delete可以添加两个空对象，空对象的值不相等
+    //Set函数可以接受一个数组（或者具有 iterable 接口的其他数据结构）作为参数，用来初始化。 set结构的遍历方法
+    // Set.prototype.keys()：返回键名的遍历器
+    // Set.prototype.values()：返回键值的遍历器
+    // Set.prototype.entries()：返回键值对的遍历器
+    // Set.prototype.forEach()：使用回调函数遍历每个成员
+    // weakSet WeakSet结构与 Set 类似，也是不重复的值的集合。区别1，WeakSet的成员只能是对象，而不能是其他类型的值；区别二：成员都是弱引用，不可遍历
+    //任何具有 Iterable 接口的对象，都可以作为 WeakSet 的参数 add has delete。不能遍历 没有size属性 
+    //map数据结构 const m = new Map(); m.set(o, 'content') m.get(o)。set get has delete 元素不重复。
+    //const map = new Map([['name', '张三'],['title', 'Author']]); 数组成员表示键值对。类似
+    //items.forEach(
+    //   ([key, value]) => map.set(key, value)
+    // );
+    //只有对同一个对象的引用，Map 结构才将其视为同一个键 undefined null为不同的键 set get delete has clear 可遍历
+    //weakmap WeakMap只接受对象作为键名（null除外），不接受其他类型的值作为键名。 其次，WeakMap的键名所指向的对象，不计入垃圾回收机制。 WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。
+    // let mapData=new Map() 缓存值 防止重复计算
+    // function walk(n){
+    //     if(n===1||n===2){
+    //         return n
+    //     }
+    //     if(mapData.get(n)){
+    //         return mapData.get(n)
+    //     }
+    //     var value=walk(n-1)+walk(n-2)
+    //     mapData.set(n,value)
+    //     return value
+    // }
+
+    // 数组拍平
+    // function flat(arr=[],result=[]){
+    //     if(Object.prototype.toString.call(arr)!=='[object Array]'){
+    //         throw new Error('请输入数组')
+    //     }
+    //     arr.forEach(item => {
+    //         if(Object.prototype.toString.call(item)==='[object Array]'){
+    //             result=result.concat(flat(item,[]))
+    //         }else{
+    //             result.push(item)
+    //         }
+    //     });
+    //     return result
+    // }
+
+    // 对象格式化
+
+    // function keysLower(obj) {
+    //     let reg = new RegExp("([A-Z]+)", "g");
+    //     for (let key in obj) {
+    //         if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    //             let temp = obj[key];
+    //             if (reg.test(key.toString())) {
+    //                 temp = obj[key.replace(reg,
+    //                     function (result) {
+    //                         return result.toLowerCase()
+    //                     })] = obj[key];
+    //                 delete obj[key];
+    //             }
+    //             if (Object.prototype.toString.call(temp) === '[object Object]') {
+    //                 keysLower(temp);
+    //             }
+    //         }
+    //     }
+    //     return obj;
+    // }
+
+    // function keyLower(obj) {
+    //     let reg = new RegExp("([A-Z]+)", "g");
+    //     for (var key in obj) {
+    //         if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    //             var temp = obj[key]
+    //             if (reg.test(key.toString())) {
+    //                 var newKey = key.toLowerCase()
+    //                 temp = obj[newKey] = obj[key]
+    //                 delete obj[key]
+    //             }
+    //             if (Object.prototype.toString.call(temp) === '[object Object]') {
+    //                 keyLower(temp)
+    //             }
+    //         }
+    //     }
+
+    //     return obj
+    // }
+    // var obj = {
+    //     x: 1,
+    //     Y: {
+    //         Z: 2,
+    //         B: 3
+    //     }
+    // }
+    // keyLower(obj)
+    // console.log(obj)    服了
+
+    // 数组去重 map数据结构去重
+    // https: //blog.csdn.net/weixin_40802058/article/details/87193344  十几种
+    //     [...new Set(arr)]
+
+    // function arrayNonRepeatfy(arr) {
+    //     let map = new Map();
+    //     let arrary = new Array(); // 数组用于返回结果
+    //     for (let i = 0; i < arr.length; i++) {
+    //         if (map.has(arr[i])) { // 如果有该key值
+    //             map.set(arr[i], true)
+    //         } else {
+    //             map.set(arr[i], false); // 如果没有该key值
+    //             array.push(arr[i])
+    //         }
+    //     }
+    //     return array;
+    // }
+
+    // 数组乱序
+    // https: //www.cnblogs.com/guolao/p/10173537.html 洗牌算法 random一个值与数组最后一个交换位置
+    //     固定一个值
+    // sleep函数作用是让线程休眠， 等到指定时间在重新唤起。
+    // https: //www.cnblogs.com/mengfangui/p/9765243.html
+    // https: //www.jianshu.com/p/01184f1a2f7e
+</script>
+
+</html>

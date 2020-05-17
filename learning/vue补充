@@ -1,0 +1,101 @@
+vue父子组件生命周期执行顺序
+一、加载渲染过程
+父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
+二、子组件更新过程
+父beforeUpdate->子beforeUpdate->子updated->父updated
+三、父组件更新过程
+父beforeUpdate->父updated
+四、销毁过程
+父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+Vue父子组件生命周期钩子的执行顺序遵循：从外到内，然后再从内到外，不管嵌套几层深，也遵循这个规律。
+
+
+如何实现一个指令
+vue.nextTick实现原理
+diff算法
+如何做到的双向绑定
+虚拟dom为什么快
+如何设计一个组件
+
+
+五、loader和plugin的区别
+对于loader，它是一个转换器，将A文件进行编译形成B文件，这里操作的是文件，比如将A.scss转换为A.css，单纯的文件转换过程
+
+plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听webpack打包过程中的某些节点，执行广泛的任务
+
+
+首屏加载优化：
+1、使用CDN资源 减少服务器宽带压力
+2、路由懒加载
+3、将一些静态js css放到其他地方（如OSS），减小服务器压力
+4、按需加载三方资源，如iview,建议按需引入iview中的组件
+5、使用nginx开启gzip减小网络传输的流量大小
+6、若首屏为登录页，可以做成多入口，登录页单独分离为一个入口
+7、使用uglifyjs-webpack-plugin插件代替webpack自带UglifyJsPlugin插件
+
+1、JavaScript外联文件引用放在html文档底部；CSS外联文件引用在html文档头部，位于head内；
+2、http静态资源尽量用多个子域名；
+3、服务器端提供html文档和http静态资源时，尽量开启gzip压缩；
+4、在js，css，image等资源响应的httpheaders里，设置expires，last-modified；
+6、js/css的minify：可统一通过combo handler做到压缩加合并；
+7、减少不必要的301/302跳转：别让页面打开时间浪费在302多次跳转上（每次可能几十毫秒）；
+8、请大量使用雪碧图：这样做可以大大地减少CSS背景图片的HTTP请求次数；
+9、首屏不需要展示的较大尺寸图片，请使用lazyload；
+12、减少cookies的大小：尽量减少cookies的体积对减少用户获得响应的时间十分重要；
+13、使用无cookies的域；
+14、减少DOM Elements的数量；
+15、引入textarea/script元素做延迟解析异步渲染
+
+
+一个网页从请求到呈现花了很长时间，如何排查
+https://www.cnblogs.com/muxi0407/p/11589834.html
+响应比较慢可以从两个层次去考虑
+连接初始化阶段耗时
+请求和响应耗时
+
+浏览器端看XHR请求，判断XHR请求本身是否有异常；
+浏览器端看ALL请求，判断非XHR请求是否有异常；
+服务器端查看服务本身是否正常；
+服务器端查看服务建立的TCP连接是否正常；
+抓包查看TCP交互和业务请求交互报文是否有异常。
+
+Javascript垃圾回收方法
+标记清除（mark and sweep）
+
+这是JavaScript最常见的垃圾回收方式，当变量进入执行环境的时候，比如函数中声明一个变量，垃圾回收器将其标记为“进入环境”，当变量离开环境的时候（函数执行结束）将其标记为“离开环境”。
+垃圾回收器会在运行的时候给存储在内存中的所有变量加上标记，然后去掉环境中的变量以及被环境中变量所引用的变量（闭包），在这些完成之后仍存在标记的就是要删除的变量了
+
+引用计数(reference counting)
+当声明了一个 变量并将一个引用类型赋值给该变量的时候这个值的引用次数就加1，如果该变量的值变成了另外一个，则这个值得引用次数减1，当这个值的引用次数变为0的时 候，说明没有变量在使用，这个值没法被访问了，因此可以将其占用的空间回收，这样垃圾回收器会在运行的时候清理掉引用次数为0的值占用的空间。
+
+所以只不过webpack选择了函数式编程的方式，所以loader的顺序编程了从右往左，如果webpack选择了pipe的方式，那么大家现在写loader的时候的顺序就变成从左往右了
+compose : require("style-loader!css-loader!sass-loader!./my-styles.sass");
+pipe : require("./my-styles.sass!sass-loader!css-loader!style-loader");
+
+https://blog.csdn.net/guoqiankunmiss/article/details/97808703
+https://www.jianshu.com/p/7861c7abd717
+vue.nextTick实现原理
+
+vue组件设计
+打包优化
+bable相关
+
+babel 相关；
+
+mvvm 的好处；
+
+jquery 的一些基本用法；
+
+lodash 相关；
+
+vue 和 react 的对比；
+
+vue 和 jquery 的对比；
+Lodash是一个著名的javascript原生库，不需要引入其他第三方依赖。是一个意在提高开发者效率,提高JS原生方法性能的JS库。简单的说就是，很多方法lodash已经帮你写好了，直接调用就行，不用自己费尽心思去写了，而且可以统一方法的一致性。Lodash使用了一个简单的 _ 符号，就像Jquery的 $ 一样，十分简洁。
+类似的还有Underscore.js和Lazy.js
+通过使用数组，数字，对象，字符串等方法，Lodash使JavaScript变得更简单。
+
+内存泄露是指一块被分配的内存既不能使用，又不能回收，直到浏览器进程结束。
+https://segmentfault.com/a/1190000017455677
+https://blog.csdn.net/xiasohuai/article/details/82184918
+ Choices.js 

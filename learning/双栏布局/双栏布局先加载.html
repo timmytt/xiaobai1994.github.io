@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .main-wrapper,
+        .sidebar {
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+        }
+
+        .main-wrapper {
+            float: left;
+            width: 100%;
+        }
+
+        .main {
+            margin-left: 210px;
+            background-color: black;
+            color: white;
+        }
+
+        .sidebar {
+            float: left;
+            width: 200px;
+            margin-left: -100%;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="main">右边自适应</div>
+    </div>
+    <div class="sidebar">左边固定宽度</div>
+</body>
+
+</html>
